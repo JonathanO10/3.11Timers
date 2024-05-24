@@ -7,47 +7,52 @@
 </head>
 <body>
 <div class="container">
+
   <div class="content">
-    <button id="trigger">Click Me!</button>
-    <button id="interval">Repeat</button>
-    <button id="cancel">Cancel repeat</button>
+    <button id="remove">Remove me!</button>
+    <div id="background" style="background-color:powderblue;">
+      <button id="color">Color</button>
+      <button id="stop">stop color</button>
+    </div>
   </div>
 </div>
 
 <script>
-  const myButton = document.getElementById("trigger");
-  const repeatButton = document.getElementById("interval");
-  const cancelButton = document.getElementById("cancel");
+  const removeButton = document.getElementById("remove");
+  const color = document.getElementById("color");
+  const stop = document.getElementById("stop");
+  const colorList = ['orange', 'green', 'blue', 'red', 'black']
+
   let interval;
-  myButton.addEventListener('click', function(){
-    //This will happen in 1000ms, or 1 second
-    setTimeout(function(){
-      console.log("I was clicked 1 second ago")
-    }, 1000);
 
-    //Not in a timeout, so does not wait
-    console.log("Happens right away")
-  })
-
-  repeatButton.addEventListener('click', function (){
-    if (!interval){
-      interval = setInterval(function (){
-        console.log("I happen every second.")
-      }),  1000;
-    else (interval.value = 3000){
-        myButton.remove();
-      }
-    }
+  removeButton.addEventListener('click', function() {
+    remove();
   });
 
-  cancelButton.addEventListener('click', function (){
+  function remove(){
+      setTimeout(function () {
+        removeButton.remove();
+      }, 3000);
+  }
+
+  color.addEventListener('click', function (){
+    changing();
+  });
+
+  function changing(){
+    if (!interval){
+      interval = setInterval(function (){
+        let answer = colorList[Math.floor(Math.random()*colorList.length)];
+        document.getElementById('background').style.backgroundColor = answer;
+      },  5000);
+    }
+  }
+  stop.addEventListener('click', function (){
     if (interval){
       clearInterval(interval);
       interval = null;
     }
   })
-
-
 </script>
 </body>
 </html>
